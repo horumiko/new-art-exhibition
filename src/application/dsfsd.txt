@@ -1,0 +1,147 @@
+import './App.css';
+import * as PANOLENS from 'panolens';
+import React, { useRef, useEffect, useState } from "react";
+import * as THREE from 'three';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import ReactLoading from "react-loading";
+
+const createPoint = (x = 0, y = 0, z = 0, hoverText="InfoSpot", urlLink = '') =>{
+    let infospot = new PANOLENS.Infospot(500, PANOLENS.DataImage.Info);
+  
+    infospot.position.set(x, y, z);
+  
+    infospot.addHoverText( hoverText );
+    infospot.addEventListener('click', function(){window.open(urlLink)})
+   //infospot.addEventListener( "click", func);
+  
+    return infospot;
+}
+
+const playMusic = () =>{
+  
+    audioLoader.load( "./assets/audio/panoramaAudio.mp3", function( buffer ) {
+        sound.setBuffer( buffer );
+        sound.setLoop( true );
+        sound.setVolume( 0.1 );
+        sound.play();
+      
+    }, function ( xhr ) {
+      console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+    },
+  
+    function ( err ) {
+      console.log( 'error: music' );
+    });
+  };
+
+
+
+const IMAGES = [
+    //"https://images.pexels.com/photos/38537/woodland-road-falling-leaf-natural-38537.jpeg",
+];
+
+  
+let Pano1 = new PANOLENS.ImagePanorama('./assets/img/panoramaImg.jpeg');
+let Pano2 = new PANOLENS.ImagePanorama('./assets/img/panoramaImg2.jpeg');
+let Pano3 = new PANOLENS.VideoPanorama('./assets/video/bb.mp4', { autoplay: true, muted: false });
+
+let infspot1_pic1 = createPoint(-2773.42, -1922.27, -3684.80);
+let infspot1_pic2 = createPoint(-2444.85, 853.50, 4273.33);
+
+
+let infospot2_pic1 = createPoint(-2087.54, -253.68, -4529.11);
+let infospot2_pic2 = createPoint(221.25, 427.21, 4968.86);
+
+const listener = new THREE.AudioListener();
+const sound = new THREE.Audio( listener );
+const audioLoader = new THREE.AudioLoader();
+
+const viewer = new PANOLENS.Viewer( { 
+    output: 'console'
+});
+
+Pano1.add(infspot1_pic1, infspot1_pic2);
+Pano2.add(infospot2_pic1, infospot2_pic2);
+
+viewer.container.style.width = 1200 + "px";
+viewer.container.style.height = 600 + "px";
+viewer.onWindowResize( 1200, 600 );
+
+viewer.add(Pano1, Pano2, Pano3);
+
+const onButtonClick = ( targetPanorama ) => {
+    viewer.setPanorama(targetPanorama);
+}
+
+const Inforamrion = () =>{
+    return(
+        <div id="desc-container" style={{display : 'none'}}>
+            <div className="title">China's Forgotten War</div>
+            <div className="text">WWII came to the small town of Tai’erzhuang in central China – and it was never the same again. The town was strategically placed, on the north-south transport railway corridor and the ancient Grand Canal, and so was a focus of the Japanese Imperial army as it advanced. Li Jing Shan was only a child when his family fled the fighting. They returned to find their home, and most of the town, in ruins.</div>
+        </div>
+    )
+}
+
+const Buttons = () => {
+    return(
+        <>
+            <button onClick={onButtonClick.bind(this, Pano1)}>Pano1</button>
+            <button onClick={onButtonClick.bind(this, Pano2)}>Pano2</button>
+            <button onClick={onButtonClick.bind(this, Pano3)}>Video</button>
+            <button onClick={playMusic}>Play Music</button>
+        </>
+    )
+}
+
+const ImageZoom = () => {
+  
+    return (
+    <>
+        <TransformWrapper
+            defaultScale={1}
+            defaultPositionX={1}
+            defaultPositionY={1}
+        >
+          <TransformComponent>
+              <img src={IMAGES[0]} style={{ width: "100%" }} />
+          </TransformComponent>
+        </TransformWrapper>
+      </>
+    )
+  };
+
+const App = () => {
+
+    const [done, setDone] = useState(false);
+
+    useEffect(()=>{
+      setTimeout(()=>{
+        fetch("https://images.pexels.com/photos/38537/woodland-road-falling-leaf-natural-38537.jpeg")
+        .then(response => response.blob())
+        .then((imageBlob) =>{
+          const imageObjectURL = URL.createObjectURL(imageBlob);
+          IMAGES.push(imageObjectURL);
+          document.body.removeChild(document.querySelector('.panolens-container'));
+          setDone(true);
+        })
+      }, 2000)}, []);
+
+    return (
+        !done ? (
+        <ReactLoading className="loader"
+          type={"bars"}
+          color={"#03fc4e"}
+          height={100}
+          width={100}
+        />
+      ) : (
+        <>
+            <p>Art Exhibition</p>
+            <Buttons />
+            <Inforamrion />
+            <div></div>
+        </>
+    ));
+}
+
+export default App;

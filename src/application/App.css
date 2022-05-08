@@ -1,38 +1,69 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Ubuntu', sans-serif;
+}
+.art-name{
+    font-size: 64px;
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.panolens-container{
+    border-style: solid;
+    border-image-width: 15px;
+    border-image-slice: 30;
+    border-image-repeat: stretch;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+button {
+    margin: 50px;
+    width: 200px;
+    font-family: inherit;
   }
-}
+  /* End of Page styling */
+  
+  /* Simple button styling -- No animation */
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .fill {
+    margin: 20px  ;
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px 50px 13px;
+    outline: 0;
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
   }
-  to {
-    transform: rotate(360deg);
+  
+  .fill::after {
+    content: "";
+    background-color: #ffe54c;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+    transition: 0.2s;
   }
-}
+  
+  .fill:hover::after {
+    top: 0px;
+    left: 0px;
+  }
+
+  .buttons{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+  }
