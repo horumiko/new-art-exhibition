@@ -10,12 +10,13 @@ const createPoint = (x = 0, y = 0, z = 0, hoverText="", urlLink = '', urlImg = '
     infospot.position.set(x, y, z);
   
     infospot.addHoverText( hoverText );
+
     if(urlLink.length != 0) infospot.addEventListener('click', function(){window.open(urlLink)});
 
-    if(moveTo != {}) infospot.addEventListener('click', function(){viewer.setPanorama(moveTo)}); 
-  
+    if(moveTo !== {} ) infospot.addEventListener('click', function(){viewer.setPanorama(moveTo)}); 
+
     return infospot;
-}
+}////
 
 let flag = false;
 
@@ -31,7 +32,7 @@ const playMusic = () =>{
   };
 }
 
-function changeMode(){
+const changeMode = () =>{
   
     modeIndex = modeIndex >= 2 ? 0 : modeIndex + 1;
     
@@ -44,31 +45,27 @@ function changeMode(){
         
     }
 }
-const viewer = new PANOLENS.Viewer( { 
-    output: 'console',
-});
+
+
+
+const viewer = new PANOLENS.Viewer();//
 
 let modeIndex = 0;
-let Pano1 = new PANOLENS.ImagePanorama('./assets/img/pano1.jpeg');
-let Pano2 = new PANOLENS.ImagePanorama('./assets/img/pano2.jpeg');
-let Pano3 = new PANOLENS.VideoPanorama('./assets/video/bb.mp4', { autoplay: true, muted: false });
-
-let pano1_inf1 = createPoint(377.99, -224.88, -4971.35, "", "/valley");
-let pano1_inf2 = createPoint(-3861.60, -175.26, -3154.59, "", "/safari");
-let pano1_inf3 = createPoint(-4122.69, -179.26, 2806.51,  "");
-let pano1_inf4 = createPoint(385.95, -229.41, 4970.76,  "");
-let pano1_inf5 = createPoint(4788.60, -305.95, 1374.36,  "");
-let pano1_inf6 = createPoint(4617.66, -241.92, -1877.12,  "");
-let pano1_move1 = createPoint(-4369.13, -1601.59, 1811.04, "Pano2", "", "./assets/img/move.png", Pano2);
+let Pano1 = new PANOLENS.ImagePanorama('./assets/img/pano1.png');//
+let Pano2 = new PANOLENS.ImagePanorama('./assets/img/pano2.png');//
+let Pano3 = new PANOLENS.VideoPanorama('./assets/video/bb.mp4', { autoplay: true, muted: false });//
 
 
-let pano2_inf1 = createPoint(-991.56, 221.51, -4889.54);
-let pano2_inf2 = createPoint(-4982.36, 288.14, 120.51);
-let pano2_inf3 = createPoint(-1398.34, 292.86, 4782.71);
-let pano2_inf4 = createPoint(2190.09, 141.30, 4481.81);
-let pano2_inf5 = createPoint(4987.53, -214.71, 76.96);
-let pano2_move1  = createPoint(4218.92, -1799.96, 1973.12, "Pano1", "", "", Pano1);
+let pano1_inf1 = createPoint(3425.53, -1998.13, -3038.09, "", "/valley" )//
+let pano1_inf3 = createPoint(-3018.83, -1558.51, -3659.56,  "");//
+let pano1_inf4 = createPoint(3349.55, -445.70, 3681.14,  "");//
+let pano1_move1 = createPoint(4893.62, -951.60, 212.12, "", "", "./assets/img/move.png", Pano2);//
 
+let pano2_inf1 = createPoint(4872.66, -1076.20, 139.31, "", "", "./assets/img/video.png", "");//
+
+let pano2_inf2 = createPoint(1473.89, -1444.85, -4550.58, "", "/safari");//
+let pano2_inf3 = createPoint(-1256.02, -1609.31, 4555.24);//
+let pano2_move1  = createPoint(-4912.44, -646.55, -612.05, "", "", "./assets/img/exit.png", Pano1);//
 
 const listener = new THREE.AudioListener();
 const sound = new THREE.Audio( listener );
@@ -88,14 +85,14 @@ function ( err ) {
 console.log( 'error: music' );
 });
 
-Pano1.add(pano1_inf1, pano1_inf2, pano1_inf3, pano1_inf4, pano1_inf5, pano1_inf6, pano1_move1);
-Pano2.add(pano2_inf1, pano2_inf2, pano2_inf3, pano2_inf4, pano2_inf5, pano2_move1);
+Pano1.add(pano1_inf1, pano1_inf3, pano1_inf4, pano1_move1);
+Pano2.add(pano2_inf1, pano2_inf2, pano2_inf3, pano2_move1);
 
-viewer.container.style.width = 1200 + "px";
-viewer.container.style.height = 600 + "px";
-viewer.onWindowResize( 1200, 600 );
+viewer.container.style.width = 1200 + "px";//
+viewer.container.style.height = 600 + "px";//
+viewer.onWindowResize( 1200, 600 );/////
 
-viewer.add(Pano1, Pano2, Pano3);
+viewer.add(Pano1, Pano2, Pano3);//
 
 document.querySelector('.panolens-container').style.display = 'none';
 
@@ -117,26 +114,25 @@ const Buttons = () => {
 
         </>
     )
-}
+}//
 
 const Information = () =>{
     return(
         <>
             <p className='art-name'>New Art Exhibition</p>
-            <p className='about'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at fringilla nunc, vel fermentum lectus. Donec ut efficitur magna. Sed viverra interdum eros, vel tempus mauris convallis tempor. Cras finibus sagittis leo eu lacinia. Integer auctor eu velit vehicula sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam mi dui, faucibus eu eleifend non, scelerisque quis est. Pellentesque nisi elit, porta tincidunt est ut, cursus rhoncus lorem. Nam posuere est non eros consequat fringilla. Nulla elementum congue cursus.</p>
+            <p className='about'>New Art Exhibiton is a project that will help you interactively present your art exhibition.
+                                 Use the buttons below or the mouse to move around the exhibition.</p>
         </>
     )
-}
+}//
 const App = () => {
 
     const [done, setDone] = useState(false);
     useEffect(()=>{
       setTimeout(()=>{
-        fetch("https://images.pexels.com/photos/38537/woodland-road-falling-leaf-natural-38537.jpeg")
+        fetch("./assets/img/pano1.png")
         .then(response => response.blob())
-        .then((imageBlob) =>{
-          const imageObjectURL = URL.createObjectURL(imageBlob);
-          //IMAGES.push(imageObjectURL);
+        .then(() =>{
           document.querySelector('.panolens-container').style.display = 'block';
           setDone(true);
         })

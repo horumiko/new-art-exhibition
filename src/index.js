@@ -9,14 +9,13 @@ import {
   Route,
 } from "react-router-dom";
 
-//
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="valley" element={<ImageZoom item='0' name='Magical Valley'/>} />
-      <Route path="safari" element={<ImageZoom item='1'/>} />
+      <Route path="safari" element={<ImageZoom item='1' name='Safari'/>} />
     </Routes>
   </BrowserRouter>
 );
